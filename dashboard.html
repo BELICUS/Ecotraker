@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoTracker - App</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- Aplicación Principal -->
+    <div id="app-screen" class="screen active">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo-small">
+                    <span class="logo-icon">🌱</span>
+                    <span>EcoTracker</span>
+                </div>
+                <div class="user-info">
+                    <span id="user-name"></span>
+                    <button id="logout-btn" class="btn btn-secondary">Salir</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Navigation -->
+        <nav class="nav">
+            <button class="nav-btn active" data-view="dashboard">
+                <span>📊</span> Dashboard
+            </button>
+            <button class="nav-btn" data-view="meals">
+                <span>🍽️</span> Comidas
+            </button>
+            <button class="nav-btn" data-view="trips">
+                <span>🚗</span> Viajes
+            </button>
+            <button class="nav-btn" data-view="tips">
+                <span>💡</span> Tips
+            </button>
+            <button class="nav-btn" data-view="ranking">
+                <span>🏆</span> Ranking
+            </button>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Dashboard View -->
+            <div id="dashboard-view" class="view active">
+                <h2>Dashboard Semanal</h2>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">🌍</div>
+                        <div class="stat-info">
+                            <span class="stat-label">CO2 Total (Semana)</span>
+                            <span class="stat-value" id="total-co2">0 kg</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">🍽️</div>
+                        <div class="stat-info">
+                            <span class="stat-label">CO2 Comidas</span>
+                            <span class="stat-value" id="meals-co2">0 kg</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">🚗</div>
+                        <div class="stat-info">
+                            <span class="stat-label">CO2 Transporte</span>
+                            <span class="stat-value" id="trips-co2">0 kg</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">📈</div>
+                        <div class="stat-info">
+                            <span class="stat-label">Promedio Diario</span>
+                            <span class="stat-value" id="daily-avg">0 kg</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <h3>Emisiones por Día</h3>
+                    <div id="weekly-chart" class="chart"></div>
+                </div>
+
+                <div class="recent-activity">
+                    <h3>Actividad Reciente</h3>
+                    <div id="recent-list" class="activity-list"></div>
+                </div>
+            </div>
+
+            <!-- Meals View -->
+            <div id="meals-view" class="view">
+                <h2>Registro de Comidas</h2>
+
+                <form id="meal-form" class="input-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="meal-type">Tipo de Comida</label>
+                            <select id="meal-type" required>
+                                <option value="">Seleccionar...</option>
+                                <option value="carne-roja">Carne Roja (3.3 kg CO2)</option>
+                                <option value="pollo">Pollo (0.9 kg CO2)</option>
+                                <option value="pescado">Pescado (1.2 kg CO2)</option>
+                                <option value="vegetariana">Vegetariana (0.4 kg CO2)</option>
+                                <option value="vegana">Vegana (0.3 kg CO2)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="meal-date">Fecha</label>
+                            <input type="date" id="meal-date" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Registrar Comida</button>
+                </form>
+
+                <div class="records-list">
+                    <h3>Comidas Registradas</h3>
+                    <div id="meals-list"></div>
+                </div>
+            </div>
+
+            <!-- Trips View -->
+            <div id="trips-view" class="view">
+                <h2>Registro de Viajes</h2>
+
+                <form id="trip-form" class="input-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="trip-type">Tipo de Transporte</label>
+                            <select id="trip-type" required>
+                                <option value="">Seleccionar...</option>
+                                <option value="coche">Coche (0.12 kg CO2/km)</option>
+                                <option value="bus">Bus (0.05 kg CO2/km)</option>
+                                <option value="metro">Metro (0.03 kg CO2/km)</option>
+                                <option value="bici">Bicicleta (0 kg CO2/km)</option>
+                                <option value="caminando">Caminando (0 kg CO2/km)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="trip-distance">Distancia (km)</label>
+                            <input type="number" id="trip-distance" step="0.1" min="0" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="trip-date">Fecha</label>
+                            <input type="date" id="trip-date" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Registrar Viaje</button>
+                </form>
+
+                <div class="records-list">
+                    <h3>Viajes Registrados</h3>
+                    <div id="trips-list"></div>
+                </div>
+            </div>
+
+            <!-- Tips View -->
+            <div id="tips-view" class="view">
+                <h2>Tips para Reducir tu Huella</h2>
+                <div id="tips-container" class="tips-grid"></div>
+            </div>
+
+            <!-- Ranking View -->
+            <div id="ranking-view" class="view">
+                <h2>Ranking de Amigos</h2>
+                <p class="ranking-subtitle">Compite con otros usuarios para ser más verde 🌱</p>
+                <div id="ranking-list" class="ranking-container"></div>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
